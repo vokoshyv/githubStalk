@@ -3,9 +3,10 @@ var Router = require('react-router');
 var Repos = require('./Github/Repos');
 var UserProfile = require('./Github/UserProfile');
 var Notes = require('./Notes/Notes');
+var ReactFireMixin = require('reactfire');
 
 var Profile = React.createClass({
-  mixins: [Router.State], 
+  mixins: [Router.State, ReactFireMixin], 
   getInitialState: function(){
     return {
       notes: ['note1', 'note2'],
