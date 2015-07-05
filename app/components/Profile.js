@@ -4,6 +4,7 @@ var Repos = require('./Github/Repos');
 var UserProfile = require('./Github/UserProfile');
 var Notes = require('./Notes/Notes');
 var ReactFireMixin = require('reactfire');
+var Firebase = require('firebase');
 
 var Profile = React.createClass({
   mixins: [Router.State, ReactFireMixin], 
@@ -13,6 +14,14 @@ var Profile = React.createClass({
       bio: {name: 'Tyler', height: '70'}, 
       repos: [1, 2, 3]
     }
+  }, 
+  componentDidMount: function(){
+    this.ref = new Firebase('https://githubstalker.firebaseio.com/');
+    var childRef = this.ref.child(this.getParams().username);
+    this.bindAsArray(childRef, 'notes');
+  }, 
+  componentWillUnmount: function(){
+    this.unbind('notes');
   }, 
   render: function(){
     var username = this.getParams().username;
